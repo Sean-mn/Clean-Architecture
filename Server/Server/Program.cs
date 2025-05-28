@@ -2,7 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Server.Repositories;
 using Server.Repositories.DBContexts;
+using Server.Repositories.Interfaces;
 using Server.Services;
 using Server.Services.Interfaces;
 
@@ -15,6 +17,7 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
