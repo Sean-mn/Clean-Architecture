@@ -6,12 +6,17 @@ namespace Server.Services;
 public class ServiceManager : IServiceManager
 {
     private readonly AuthDbContext _context;
-    private AuthService? _authService;
+    private readonly IConfiguration _config;
     
-    public ServiceManager(AuthDbContext context)
+    private AuthService? _authService;
+    private TokenService? _tokenService;
+    
+    public ServiceManager(AuthDbContext context, IConfiguration config)
     {
         _context = context;
+        _config = config;
     }
     
     public AuthService AuthService => _authService ??= new AuthService(_context);
+    public TokenService TokenService => _tokenService ??= new TokenService(_config);
 }
