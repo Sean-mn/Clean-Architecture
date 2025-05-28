@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
 using Server.Services.Interfaces;
@@ -9,7 +8,7 @@ namespace Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IServiceManager _service;
+        private readonly IServiceManager _service;
 
         public AuthController(IServiceManager service)
         {
@@ -26,10 +25,13 @@ namespace Server.Controllers
                 
                 var user = await _service.AuthService.RegisterAsync(dto);
                 
+                var token = _service.TokenService.GenerateToken(user);
+                
                 return Ok(new
                 {
                     Message = "회원가입 성공",
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Token = token
                 });
             }
             catch (Exception ex)
@@ -51,11 +53,14 @@ namespace Server.Controllers
                 if (user == null)
                     return Unauthorized("로그인 실패");
 
+                var token = _service.TokenService.GenerateToken(user);
+                
                 return Ok(new
                 {
                     Message = "로그인 성공",
                     UserId = user.Id,
-                    Username = user.Username
+                    Username = user.Username,
+                    Token = token
                 });
             }
             catch (Exception ex)
