@@ -1,13 +1,14 @@
 ﻿using Server.Repositories.DBContexts;
+using Server.Repositories.Interfaces;
 
 namespace Server.Services;
 
 public abstract class Service
 {
-    protected AuthDbContext _context;
-    
-    protected Service(AuthDbContext context)
+    protected readonly IUserRepository _userRepository;
+
+    protected Service(IUserRepository userRepository)
     {
-        _context = context;
+        _userRepository = userRepository;
     }
 }
