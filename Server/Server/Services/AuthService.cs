@@ -36,7 +36,11 @@ public class AuthService : Service, IAuthService
     {
         var user = await _userRepository.GetUserByUsernameAsync(dto.Username);
 
-        if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+        if (user == null)
+            return null;
+        
+        bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(dto.Password, user.Password);
+        if (!isPasswordCorrect)
             return null;
         
         return user;
