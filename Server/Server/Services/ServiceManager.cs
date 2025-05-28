@@ -1,8 +1,9 @@
 ﻿using Server.DBContexts;
+using Server.Services.Interfaces;
 
 namespace Server.Services;
 
-public class ServiceManager
+public class ServiceManager : IServiceManager
 {
     private readonly AuthDbContext _context;
     private AuthService? _authService;
