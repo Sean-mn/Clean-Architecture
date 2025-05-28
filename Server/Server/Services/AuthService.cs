@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server.DBContexts;
 using Server.DTOs;
 using Server.Entities.Models;
+using Server.Repositories.DBContexts;
 using Server.Services.Interfaces;
 
 namespace Server.Services;

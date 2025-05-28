@@ -1,4 +1,4 @@
-﻿using Server.DBContexts;
+﻿using Server.Repositories.DBContexts;
 using Server.Services.Interfaces;
 
 namespace Server.Services;
