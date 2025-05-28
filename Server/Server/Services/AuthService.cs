@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Server.DBContexts;
 using Server.DTOs;
 using Server.Entities.Models;
@@ -18,9 +17,7 @@ public class AuthService : Service
             .AnyAsync(u => u.Username == dto.Username);
 
         if (exists)
-        {
             throw new Exception("이미 사용 중인 유저 이름");
-        }
 
         var newUser = new User
         {
@@ -32,5 +29,16 @@ public class AuthService : Service
         await _context.SaveChangesAsync();
 
         return newUser;
+    }
+
+    public async Task<User?> LoginAsync(LoginRequestDto dto)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == dto.Username);
+
+        if (user == null || user.Password != dto.Password)
+            return null;
+        
+        return user;
     }
 }
