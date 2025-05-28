@@ -16,17 +16,29 @@ public class UserRepository : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllUsersAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<User?> GetUserByIdAsync(int uid)
     {
-        return await _context.Users.FindAsync(uid);
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == uid);
     }
 
     public async Task<User?> GetUserByUsernameAsync(string username)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        try
+        {
+            return await _context.Users.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Username == username);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"조회 중 오류 발생: {ex.Message}");
+        }
     }
 
     public async Task<int> AddUserAsync(User user)
