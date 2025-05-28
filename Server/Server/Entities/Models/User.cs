@@ -1,5 +1,8 @@
-﻿namespace Server.Entities.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Server.Entities.Models;
+
+[Table("users")]
 public class User
 {
     public int Id { get; set; }
