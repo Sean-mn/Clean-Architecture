@@ -39,7 +39,7 @@ public class AuthService : Service, IAuthService
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Username == dto.Username);
 
-        if (user == null || user.Password != dto.Password)
+        if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             return null;
         
         return user;
