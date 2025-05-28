@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Server.DTOs;
+﻿using Server.DTOs;
 using Server.Entities.Models;
 using Server.Repositories.Interfaces;
 using Server.Services.Interfaces;
