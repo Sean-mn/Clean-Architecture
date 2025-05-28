@@ -8,12 +8,12 @@ namespace Server.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly AuthDbContext _context;
-    
+
     public UserRepository(AuthDbContext context)
     {
         _context = context;
     }
-    
+
     public async Task<IEnumerable<User>> GetAllUsersAsync()
     {
         return await _context.Users.ToListAsync();
@@ -23,7 +23,7 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users.FindAsync(uid);
     }
-    
+
     public async Task<User?> GetUserByUsernameAsync(string username)
     {
         return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
