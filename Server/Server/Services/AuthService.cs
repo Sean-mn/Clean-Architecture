@@ -19,10 +19,12 @@ public class AuthService : Service
         if (exists)
             throw new Exception("이미 사용 중인 유저 이름");
 
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+        
         var newUser = new User
         {
             Username = dto.Username,
-            Password = dto.Password
+            Password = hashedPassword
         };
         
         _context.Users.Add(newUser);
