@@ -2,10 +2,11 @@
 using Server.DBContexts;
 using Server.DTOs;
 using Server.Entities.Models;
+using Server.Services.Interfaces;
 
 namespace Server.Services;
 
-public class AuthService : Service
+public class AuthService : Service, IAuthService
 {
     public AuthService(AuthDbContext context) : base(context)
     {
