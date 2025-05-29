@@ -2,6 +2,6 @@
 
 public interface IServiceManager
 {
-    public AuthService? AuthService { get; }
-    public TokenService? TokenService { get; }
+    public IAuthService? AuthService { get; }
+    public ITokenService? TokenService { get; }
 }

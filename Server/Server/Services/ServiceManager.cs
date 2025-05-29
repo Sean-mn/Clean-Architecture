@@ -17,6 +17,6 @@ public class ServiceManager : IServiceManager
         _config = config;
     }
     
-    public AuthService AuthService => _authService ??= new AuthService(_userRepository);
-    public TokenService TokenService => _tokenService ??= new TokenService(_config);
+    public IAuthService AuthService => _authService ??= new AuthService(_userRepository);
+    public ITokenService TokenService => _tokenService ??= new TokenService(_config);
 }
