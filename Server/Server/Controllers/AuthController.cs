@@ -20,9 +20,6 @@ namespace Server.Controllers
         {
             try
             {
-                if (_service.AuthService == null)
-                    return BadRequest(new { Message = "AuthService가 초기화 되지 않았습니다" });
-                
                 var user = await _service.AuthService.RegisterAsync(dto);
                 
                 var token = _service.TokenService.GenerateToken(user);
@@ -45,13 +42,9 @@ namespace Server.Controllers
         {
             try
             {
-                if (_service.AuthService == null)
-                    return BadRequest(new { Message = "AuthService가 초기화 되지 않았습니다." });
-
                 var user = await _service.AuthService.LoginAsync(dto);
-
                 if (user == null)
-                    return Unauthorized("로그인 실패");
+                    return Unauthorized(new { Message = "잘못된 사용자 이름 또는 비밀번호입니다." });
 
                 var token = _service.TokenService.GenerateToken(user);
                 
@@ -63,9 +56,13 @@ namespace Server.Controllers
                     Token = token
                 });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest(new { Message = ex.Message});
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, new { Message = "서버 오류가 발생했습니다." });
             }
         }
     }
