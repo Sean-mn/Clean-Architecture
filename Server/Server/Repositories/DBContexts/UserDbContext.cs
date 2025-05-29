@@ -3,9 +3,9 @@ using Server.Entities.Models;
 
 namespace Server.Repositories.DBContexts;
 
-public class AuthDbContext : DbContext
+public class UserDbContext : DbContext
 {
-    public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
+    public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
     {
     }
     

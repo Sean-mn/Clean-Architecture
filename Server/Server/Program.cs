@@ -14,7 +14,7 @@ var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 if (string.IsNullOrEmpty(connectionString))
     throw new Exception("DB_CONNECTION 환경 변수 없음.");
 
-builder.Services.AddDbContext<AuthDbContext>(options =>
+builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
