@@ -30,31 +30,37 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetUserByUsernameAsync(string username)
     {
-        try
-        {
-            return await _context.Users.AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Username == username);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"조회 중 오류 발생: {ex.Message}");
-        }
+        if (string.IsNullOrWhiteSpace(username))
+            throw new ArgumentException(nameof(username));
+
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Username == username);
     }
 
     public async Task<int> AddUserAsync(User user)
     {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+
         await _context.Users.AddAsync(user);
         return await _context.SaveChangesAsync();
     }
 
     public async Task<int> UpdateUserAsync(User user)
     {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+
         _context.Users.Update(user);
         return await _context.SaveChangesAsync();
     }
 
     public async Task<int> DeleteUserAsync(User user)
     {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+
         _context.Users.Remove(user);
         return await _context.SaveChangesAsync();
     }
