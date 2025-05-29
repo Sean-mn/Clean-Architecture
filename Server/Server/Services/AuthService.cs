@@ -11,12 +11,12 @@ public class AuthService : Service, IAuthService
     {
     }
 
-    public async Task<User> RegisterAsync(RegisterRequestDto dto)
+    public async Task<User?> RegisterAsync(RegisterRequestDto dto)
     {
         var exists = await _userRepository.GetUserByUsernameAsync(dto.Username);
 
         if (exists != null)
-            throw new Exception("이미 사용 중인 유저 이름");
+            return null;
 
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
         
@@ -26,8 +26,10 @@ public class AuthService : Service, IAuthService
             Password = hashedPassword
         };
         
-        await _userRepository.AddUserAsync(newUser);
-
+        var result = await _userRepository.AddUserAsync(newUser);
+        if (result == 0)
+            return null;
+        
         return newUser;
     }
 

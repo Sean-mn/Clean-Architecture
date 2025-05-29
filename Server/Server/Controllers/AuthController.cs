@@ -20,9 +20,9 @@ namespace Server.Controllers
         {
             try
             {
-                var user = await _service.AuthService.RegisterAsync(dto);
+                var user = await _service.AuthService!.RegisterAsync(dto);
                 
-                var token = _service.TokenService.GenerateToken(user);
+                var token = _service.TokenService!.GenerateToken(user);
                 
                 return Ok(new
                 {
